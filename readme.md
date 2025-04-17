@@ -50,7 +50,7 @@ what is the structure of the KLRF2 protein?
 ```
 what is the structure of ARHGAP10?
 ```
-# Activate uv virtual environment
+### Activate uv virtual environment
 ```
 source .venv/bin/activate
 ```
