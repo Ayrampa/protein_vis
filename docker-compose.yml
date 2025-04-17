@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  ollama:         
+    image: ollama/ollama    
+    container_name: ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    entrypoint: >
+      sh -c "ollama serve & 
+            sleep 5 && 
+            ollama pull llama3.2 && 
+            wait"    
+    networks:
+      - llama-network   
+
+  flask-app:
+    build: 
+      context: ./flask_app
+      dockerfile: Dockerfile
+    container_name: flask_app
+    ports:
+      - "5050:5050"  
+    depends_on:    
+      - ollama
+      - mongo_db        
+    environment:
+      - MONGO_URI=mongodb://mongo_db:27017
+      - DATABASE_NAME=mongo_db
+      - OLLAMA_HOST=http://ollama:11434
+      - MODEL_NAME=llama3.2
+    env_file:
+      - './.env'      
+    networks:
+      - llama-network
+
+  mongo_db:
+    image: mongo:latest
+    container_name: mongo_db
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file: 
+      - './.env'
+    volumes:
+      - ./mongo_db:/data/db
+    networks:
+      - llama-network 
+
+
+volumes:
+  ollama_data:
+  mongo_db:
+
+networks:
+  llama-network:
+    driver: bridge
