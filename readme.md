@@ -1,7 +1,7 @@
 ### Display the protein structure via user request
-In this project we can display the 3D structure of protein by passing our request to llama3.2 language model, where it extract keywords from request, check if they are in protein names from the UniProt database, and return accession ID and 3D structure of the first mached entry from PDB database. Results are stored in MongoDb, they include: user request, keywords, and UniProt request result.
+In this project, we can display the 3D structure of proteins by passing our request to llama3.2 language model, where it extracts keywords from the request, checks if they are in protein names from the UniProt database, and returns the accession ID and 3D structure of the first matched entry from the PDB database. Results are stored in MongoDB; they include: user request, keywords, and UniProt request result.
 
-This project is built with the use of python, mongodb, Docker, flask, ollama (llama3.2 model). Interaction with llama is realised with LangChain python library.
+This project is built with the use of Python, MongoDB, Docker, Flask, Ollama (llama3.2 model). Interaction with llama is realized with LangChain Python library.
 
 ## Build Docker containers
 ```bash
