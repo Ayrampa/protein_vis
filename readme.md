@@ -26,7 +26,7 @@ use mongo_db
 show collections
 ```
 ```
-db.users.find().pretty()
+db.keywords.find().pretty()
 ```
 ```
 exit
@@ -49,4 +49,8 @@ what is the structure of the KLRF2 protein?
 ```
 ```
 what is the structure of ARHGAP10?
+```
+# Activate uv virtual environment
+```
+source .venv/bin/activate
 ```

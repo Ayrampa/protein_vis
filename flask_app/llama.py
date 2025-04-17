@@ -3,11 +3,12 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for
 from langchain_core.messages import HumanMessage
 from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts import PromptTemplate
+from motor.motor_asyncio import AsyncIOMotorClient
+from langchain_community.llms import Ollama
 import requests
 from pymongo import MongoClient
-
-import os
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -63,7 +64,7 @@ def get_prompt():
     return render_template('index.html', prompt=user_prompt)
 
 # Get list of all protein names from datbase uniprot
-def fetch_protein_names(limit=20000):
+def fetch_protein_names(limit=200):
     base_url = "https://www.uniprot.org/uniprotkb?query=*&facets=reviewed%3Atrue"
     params = {
         "query": "* AND organism_id:9606",
@@ -98,7 +99,7 @@ Keywords:
 """)
 
 def filter_keywords_with_llama(keywords, names):
-    names_text = "\n".join(names[:20000])  
+    names_text = "\n".join(names[:200])  
     instruction = filter_prompt.format(
         keywords=", ".join(keywords),
         names=names_text
